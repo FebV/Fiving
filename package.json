@@ -1,0 +1,14 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2",
+    "ws": "^2.2.3"
+  }
+}

@@ -1,0 +1,20 @@
+<video autoplay></video>
+<canvas id="canvas" style="width: 800px; height: 600px"></canvas>
+
+<script src="/index.js"></script>
+<script>
+  var ws = new WebSocket('ws://121.250.222.34:9080');
+  var ctx = document.getElementById('canvas').getContext('2d');
+  ws.onmessage = e => {
+    var showCtx = document.getElementById('canvas').getContext('2d');
+    var start = new Date().getTime();
+    let img = new Image();
+    img.src = URL.createObjectURL(e.data);
+    img.onload = () => {
+      showCtx.drawImage(img, 0, 0);
+      console.log(new Date().getTime() - start);
+    }
+    console.log(e.data);
+  }
+
+</script>
