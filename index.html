@@ -1,37 +1,23 @@
 <video autoplay></video>
-<img src="" style="width: 800px; height: 600px;display: none">
-<canvas style="display: none"></canvas>
-<canvas id="canvas"></canvas>
+<img src="" width="800px">
+<canvas style="display:none;"></canvas>
 
-<script src="/index.js"></script>
 <script>
   var video = document.querySelector('video');
   var canvas = document.querySelector('canvas');
   var ctx = canvas.getContext('2d');
   var localMediaStream = null;
 
-  var ws = new WebSocket('ws://localhost:9080');
-
-  ws.onmessage = e => {
-    var showCtx = document.getElementById('canvas').getContext('2d');
-    var start = new Date().getTime();
-    let img = new Image();
-    img.src = URL.createObjectURL(e.data);
-    img.onload = () => {
-      showCtx.drawImage(img, 0, 0);
-      console.log(new Date().getTime() - start);
+  function snapshot() {
+    if (localMediaStream) {
+      ctx.drawImage(video, 0, 0, 100, 100);
+      // “image/webp”对Chrome有效，
+      // 其他浏览器自动降为image/png
+      document.querySelector('img').src = canvas.toDataURL('image/webp');
     }
-    console.log(e.data);
   }
-  setInterval(() => {
-    if(!localMediaStream)
-        return;
-    ctx.drawImage(video, 0, 0, 100, 100);
-    canvas.toBlob( bl => {
-        ws.send(bl);
-    });
-  }, 50);
 
+  video.addEventListener('click', snapshot, false);
 
   navigator.getUserMedia({video: true}, function(stream) {
     video.src = window.URL.createObjectURL(stream);

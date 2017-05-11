@@ -1,5 +1,4 @@
-<video autoplay></video>
-<canvas id="canvas" style="width: 800px; height: 600px"></canvas>
+<canvas id="canvas" style="width: 100%; height:100%"></canvas>
 
 <script src="/index.js"></script>
 <script>
@@ -9,8 +8,10 @@
     var showCtx = document.getElementById('canvas').getContext('2d');
     var start = new Date().getTime();
     let img = new Image();
+    console.log(e);
     img.src = URL.createObjectURL(e.data);
     img.onload = () => {
+      console.log(img);
       showCtx.drawImage(img, 0, 0);
       console.log(new Date().getTime() - start);
     }
